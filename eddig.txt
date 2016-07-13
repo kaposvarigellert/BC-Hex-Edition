@@ -1,0 +1,244 @@
+// ConsoleApplication27.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include <iostream> 
+#include <string> 
+#include <iomanip> 
+#include <sstream>
+#include <time.h>
+
+using namespace std;
+
+class mezo {
+
+	bool csillagkod=false;
+	bool csillagrendszer=false;
+	bool kolonia=false;
+	string nev=" ";
+	string birtokos="none";
+	int id=0;
+
+
+	mezo* fent = NULL;
+	mezo* lent = NULL;
+	mezo* jobbfent = NULL;
+	mezo* jobblent = NULL;
+	mezo* balfent = NULL;
+	mezo* ballent = NULL;
+
+public:
+
+	mezo(bool csillagkode, bool csillagrendszere, bool koloniae, string neve, string birtokosa, int idje)
+	{
+		csillagkod = csillagkode;
+		csillagrendszer = csillagrendszere;
+		kolonia = koloniae;
+		nev = neve;
+		birtokos = birtokosa;
+		id = idje;
+	}
+
+	void setfent(mezo* ertek)
+	{
+		fent = ertek - 5;
+	}
+	void setlent(mezo* ertek)
+	{
+		lent = ertek + 5;
+	}
+	void setjobbfent(mezo* ertek)
+	{
+		jobbfent = ertek - 2;
+	}
+	void setbalfent(mezo* ertek)
+	{
+		balfent = ertek - 3;
+	}
+	void setjobblent(mezo* ertek)
+	{
+		balfent = ertek + 3;
+	}
+	void setballent(mezo* ertek)
+	{
+		balfent = ertek + 2;
+	}
+
+	void felrobban()
+	{
+		if (kolonia)
+		{
+			cout << "A " << nev << "nevu kolonia megsemmisult!" << endl;
+		}
+
+		kolonia = false;
+
+		if (csillagrendszer)
+		{
+			cout << "A " << nev << "nevu csillagrendszer megsemmisult!" << endl;
+		}
+
+		csillagrendszer = false;
+
+		birtokos = "none";
+		nev = nev + "maradeka";
+	}
+
+};
+
+class egyseg {
+protected:
+	mezo* pozicio;
+	int ar;
+	string tipus;
+	string birtokos;
+	int szenzortav;
+	bool urese = true;
+};
+
+class hajo : egyseg {
+	bool alcazo;
+	int lepesszam;
+	bool gazdasagi;
+	bool szallito;
+	bool sunbuster;
+	int karbantartas;
+};
+
+class allomas : egyseg {
+	bool gazdasagi;
+	int bazis;
+	hajo* epithet = new hajo[10];
+
+};
+
+class civilizacio {
+	string civilizaciom;
+	hajo* hajosor = new hajo[10];
+	allomas* allomassor = new allomas[10];
+	bool urese = true;
+};
+
+class jatekos {
+	string startcivilizacio;
+	civilizacio* civilizaciok = new civilizacio[5];
+	double bazisszorzo;
+	double nyersanyagszorzo;
+	int nyersanyag;
+	int reputacio;
+	bool native;
+	bool kaloz;
+};
+
+
+
+
+
+class event{
+	mezo* koordinata;
+	bool hajote;
+	bool nyersanyage;
+	bool bonusze;
+};
+
+void elfoglal(jatekos, mezo*)
+{
+
+}
+
+
+int main()
+{
+	srand(time(NULL));
+
+	int i;
+
+	char c = ' ';
+
+	mezo* palya;
+	palya= new mezo[13];
+
+	for (i = 0; i < 13; i++)
+	{
+		if (i == 0) 
+		{
+			palya[i].setlent(&palya[i]);
+			palya[i].setjobblent(&palya[i]);
+		}
+		else if ((i < 2) && (i>0))
+		{
+			palya[i].setlent(&palya[i]);
+			palya[i].setjobblent(&palya[i]);
+			palya[i].setballent(&palya[i]);
+		}
+		else if (i == 2)
+		{
+			palya[i].setlent(&palya[i]);
+			palya[i].setballent(&palya[i]);
+		}
+		else if ((i>=3)&&(i<5))
+		{
+			palya[i].setlent(&palya[i]);
+			palya[i].setjobblent(&palya[i]);
+			palya[i].setballent(&palya[i]);
+			palya[i].setjobbfent(&palya[i]);
+			palya[i].setbalfent(&palya[i]);
+		}
+		else if (i == 10)
+		{
+			palya[i].setfent(&palya[i]);
+			palya[i].setjobbfent(&palya[i]);
+		}
+		else if ((i > 10) && (i < 12))
+		{
+			palya[i].setfent(&palya[i]);
+			palya[i].setjobbfent(&palya[i]);
+			palya[i].setbalfent(&palya[i]);
+		}
+		else if (i == 12)
+		{
+			palya[i].setfent(&palya[i]);
+			palya[i].setbalfent(&palya[i]);
+		}
+		else if((i>=8)&&(i<10))
+		{
+			palya[i].setfent(&palya[i]);
+			palya[i].setjobblent(&palya[i]);
+			palya[i].setballent(&palya[i]);
+			palya[i].setjobbfent(&palya[i]);
+			palya[i].setbalfent(&palya[i]);
+		}
+		else if ((i % 5 == 0)&&(i!=0)&&(i != 10))
+		{
+			palya[i].setfent(&palya[i]);
+			palya[i].setjobblent(&palya[i]);
+			palya[i].setlent(&palya[i]);
+			palya[i].setjobbfent(&palya[i]);
+		}
+		else if ((i % 5 == 2)&&(i!=7)&&(i!=12))
+		{
+			palya[i].setfent(&palya[i]);
+			palya[i].setballent(&palya[i]);
+			palya[i].setlent(&palya[i]);
+			palya[i].setbalfent(&palya[i]);
+		}
+		else
+		{
+			palya[i].setfent(&palya[i]);
+			palya[i].setjobblent(&palya[i]);
+			palya[i].setballent(&palya[i]);
+			palya[i].setjobbfent(&palya[i]);
+			palya[i].setbalfent(&palya[i]);
+			palya[i].setlent(&palya[i]);
+		}
+	}
+
+	while (c != 'x') // kilépésig 
+	{
+		
+	c = cin.get();
+
+}
+
+    return 0;
+}
